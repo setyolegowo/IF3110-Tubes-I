@@ -49,8 +49,14 @@ class pagging
 		switch ($this->requestURI[$this->SumOfSub + 1])
 		{
 			case NULL:
+                include APPPATH."page/header.php";
+                include APPPATH."page/home.php";
+                include APPPATH."page/footer.php";
 				break;
 			case 'proses':
+                $bucket = json_decode($_POST['data'], true);
+                // $data = array("nama" => $_POST['name']);
+                print json_encode($bucket);
 				break;
 			case 'NotFound': 
                 include APPPATH."page/notfound.php";
