@@ -38,7 +38,7 @@ function myOutput(data) {
 }
 
 function testA() {
-	var form = document.getElementById("my_id");
+	var form = document.getElementById("wbd_search");
 	var bucket = {"nama":form.elements[0].value};
 	send("data=" + JSON.stringify(bucket), "proses/", myOutput);
 }
