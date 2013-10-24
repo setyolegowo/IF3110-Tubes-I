@@ -41,4 +41,22 @@ function testA() {
 	var form = document.getElementById("wbd_search");
 	var bucket = {"nama":form.elements[0].value};
 	send("data=" + JSON.stringify(bucket), "proses/", myOutput);
+	return false;
+}
+function showHide() {
+	if(document.getElementById("loginbox").style.display != null) {
+		if(document.getElementById("loginbox").style.display != "none") {
+			document.getElementById("loginbox").style.display = "none";
+		} else {
+			document.getElementById("loginbox").style.display = "block";
+		}
+	} else {
+		document.getElementById("loginbox").style.display = "block";
+	}
+}
+function showSubmenu() {
+	document.getElementById("kategorilist").style.display = "block";
+}
+function hideSubmenu() {
+	document.getElementById("kategorilist").style.display = "none";	
 }

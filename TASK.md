@@ -13,10 +13,11 @@ Setyo:
     
 Rivai:
     - Konsep layout HTML
-      [Belum Ada] [Deadline: 24 Oktober 2013]
+      [Sudah] [Belum divalidasi]
     - Tampilan Header dan Footer tanpa JS
-      [Belum Ada] [Deadline: 24 Oktober 2013]
+      [Belum Bagus] [Deadline: 24 Oktober 2013]
 
 Renusa:
     - Database dan konsep store saved
-      [Belum Ada] [Deadline: 24 Oktober 2013]
+      [Sudah] [Belum divalidasi]
+    - 

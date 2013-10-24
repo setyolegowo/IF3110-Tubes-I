@@ -24,21 +24,60 @@ body {
     right: 10px;
     bottom: 10px;
 }
+header #loginbox {
+    background-color: #CCCCCC;
+    display: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 4px;
+    padding-right: 4px;
+    box-shadow: inset 0px 2px 3px #888;
+    -moz-box-shadow: inset 0px 2px 3px #888;
+    -webkit-box-shadow: inset 0px 2px 3px #888;
+}
+header #loginbox form {
+    margin-left: auto;
+    right: 0;
+}
 header nav {
-    background-color: green;
+    background-color: #009900;
     text-align: left;
 }
 header nav .menu_cell {
-    cursor: pointer;
     display: inline-table;
     line-height: 3em;
-    margin-left: 10px;
     padding-left: 10px;
     padding-right: 10px;
     vertical-align: middle;
 }
-header nav .hyperlink:hover {
-    background-color: blue;
+header #kategorilist {
+    background-color: #99FF99;
+    display: none;
+    box-shadow: inset 0px 2px 3px #888;
+    -moz-box-shadow: inset 0px 2px 3px #888;
+    -webkit-box-shadow: inset 0px 2px 3px #888;
+}
+header #kategorilist a {
+    color: black;
+    display: inline-table;
+    line-height: 2em;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+}
+header #kategorilist a:hover {
+    background-color: #CCFFCC;
+    
+    box-shadow: inset 0px 2px 3px #888;
+    -moz-box-shadow: inset 0px 2px 3px #888;
+    -webkit-box-shadow: inset 0px 2px 3px #888;
+}
+header nav a {
+    color: white;
+    font-weight: bold;
+}
+header nav a:hover {
+    background-color: #006600;
     color: white;
 }
 footer {
