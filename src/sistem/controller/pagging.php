@@ -46,31 +46,59 @@ class pagging
 	}
 	protected function page_selection()
 	{
-		switch ($this->requestURI[$this->SumOfSub + 1])
-		{
-			case NULL:
-                include APPPATH."page/header.php";
-                include APPPATH."page/home.php";
-                include APPPATH."page/footer.php";
-				break;
-			case 'proses':
-                $bucket = json_decode($_POST['data'], true);
+        if($this->requestURI[$this->SumOfSub + 1] == 'proses') {
+            if($this->requestURI[$this->SumOfSub + 2] == null) {
+                // $bucket = json_decode($_POST['data'], true);
                 // $data = array("nama" => $_POST['name']);
-                print json_encode($bucket);
-				break;
-			case 'NotFound': 
-                include APPPATH."page/notfound.php";
-				break;
-			case 'NotSupport':
-                print "<h1>Here... Not Support</h1>";
-				break;
-			case 'construct':
-                print "<h1>Still Constructing</h1>";
-				break;
-			default:
-                $this->redirects('NotFound/'); 
-				break;
-		}
+                print json_encode($_POST['data']);
+            } else if($this->requestURI[$this->SumOfSub + 2] == 'json' && 
+                      $this->requestURI[$this->SumOfSub + 3] == null) {
+                include SYSTEMPATH."library/jsonresponder.php";
+                $bucket = json_decode($_POST['data'], true);
+                $responder = new JsonResponder;
+                if(method_exists($responder,$bucket['todo'])) {
+                    $responder->$bucket['todo']($bucket['data']);
+                } else {
+                    print json_encode(array("data" => "Method salah"));
+                }
+            }
+        } else {
+            include SYSTEMPATH."controller/process.php";
+            $proses = new process;
+            include APPPATH."page/header.php";
+            switch ($this->requestURI[$this->SumOfSub + 1])
+            {
+                case 'kat':
+                case NULL:
+                    include APPPATH."page/home.php";
+                    break;
+                case 'pendaftaran':
+                    if($this->requestURI[$this->SumOfSub + 2] == null)
+                        include APPPATH."page/pendaftaran.php";
+                    else if($this->requestURI[$this->SumOfSub + 2] == "kartu")
+                        include APPPATH."page/daftar_kartukredit.php";
+                    else
+                        $this->redirects('NotFound/');
+                    break;
+                case 'profil':
+                    if($this->requestURI[$this->SumOfSub + 2] == null)
+                        include APPPATH."page/profil_pelanggan.php";
+                    break;
+                case 'NotFound': 
+                    include APPPATH."page/notfound.php";
+                    break;
+                case 'NotSupport':
+                    print "<h1>Here... Not Support</h1>";
+                    break;
+                case 'construct':
+                    print "<h1>Still Constructing</h1>";
+                    break;
+                default:
+                    $this->redirects('NotFound/'); 
+                    break;
+            }
+            include APPPATH."page/footer.php";
+        }
 	}
     
     // PUBLIC METHOD

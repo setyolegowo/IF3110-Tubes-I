@@ -1,3 +1,5 @@
+var BASE_URL = "http://localhost/tugas_wbd1/";
+
 /*
  * Prosedur mengirim data melalui bahasa AJAX
  * @param {String} data 
@@ -31,32 +33,6 @@ function send(data, target, callback_f) {
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send(data);
 }
-
-function myOutput(data) {
-	var result = JSON.parse(data);
-	alert(result.nama);
-}
-
-function testA() {
-	var form = document.getElementById("wbd_search");
-	var bucket = {"nama":form.elements[0].value};
-	send("data=" + JSON.stringify(bucket), "proses/", myOutput);
-	return false;
-}
-function showHide() {
-	if(document.getElementById("loginbox").style.display != null) {
-		if(document.getElementById("loginbox").style.display != "none") {
-			document.getElementById("loginbox").style.display = "none";
-		} else {
-			document.getElementById("loginbox").style.display = "block";
-		}
-	} else {
-		document.getElementById("loginbox").style.display = "block";
-	}
-}
-function showSubmenu() {
-	document.getElementById("kategorilist").style.display = "block";
-}
-function hideSubmenu() {
-	document.getElementById("kategorilist").style.display = "none";	
+function sendJSONType(json_object, callback_f) {
+	send("data=" + JSON.stringify(json_object), BASE_URL + "proses/json/", callback_f);
 }

@@ -14,8 +14,11 @@ body {
     margin-left:auto;
 	margin-right:auto;
 	position:relative;
-	height: 100%;
 	width: 900px;
+}
+#logo {
+    padding-top: 20px;
+    padding-bottom: 4px;
 }
 #login {
     line-height: 100%;
@@ -23,21 +26,6 @@ body {
     text-align: right;
     right: 10px;
     bottom: 10px;
-}
-header #loginbox {
-    background-color: #CCCCCC;
-    display: none;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 4px;
-    padding-right: 4px;
-    box-shadow: inset 0px 2px 3px #888;
-    -moz-box-shadow: inset 0px 2px 3px #888;
-    -webkit-box-shadow: inset 0px 2px 3px #888;
-}
-header #loginbox form {
-    margin-left: auto;
-    right: 0;
 }
 header nav {
     background-color: #009900;
@@ -52,7 +40,6 @@ header nav .menu_cell {
 }
 header #kategorilist {
     background-color: #99FF99;
-    display: none;
     box-shadow: inset 0px 2px 3px #888;
     -moz-box-shadow: inset 0px 2px 3px #888;
     -webkit-box-shadow: inset 0px 2px 3px #888;
@@ -72,6 +59,10 @@ header #kategorilist a:hover {
     -moz-box-shadow: inset 0px 2px 3px #888;
     -webkit-box-shadow: inset 0px 2px 3px #888;
 }
+article {
+    padding-bottom: 16px;
+    padding-top: 16px;
+}
 header nav a {
     color: white;
     font-weight: bold;
@@ -82,4 +73,35 @@ header nav a:hover {
 }
 footer {
     padding-top: 10px;
+}
+
+/* PENDAFTARAN */
+#daftar_kartukredit input, #daftar_kartukredit select, #pendaftaran input {
+    padding: 4px;
+}
+#daftar_kartukredit input[type=text], #pendaftaran input[type=text], #pendaftaran input[type=password] {
+    font-family: monospace;
+}
+#daftar_kartukredit h2, #pendaftaran h2 {
+    padding-left: 16px;
+    font-size: 16px;
+}
+#daftar_kartukredit p, #pendaftaran p {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+#daftar_kartukredit label, #pendaftaran label {
+    display: inline-block;
+    padding-right: 8px;
+    text-align: right;
+    width: 200px;
+}
+
+/* PROFIL ATAU IDENTITAS */
+#identitas span {
+    display: inline-block;
+    font-weight: bold;
+    padding-right: 8px;
+    text-align: right;
+    width: 200px;
 }

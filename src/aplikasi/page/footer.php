@@ -3,5 +3,6 @@
     <footer class="container">
         <div>Ruserba &copy; 2013</div>
     </footer>
+    <script src="<?php print HOME_URL; ?>assets/use.js"></script>
 </body>
 </html>
