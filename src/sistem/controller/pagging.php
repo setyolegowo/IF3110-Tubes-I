@@ -81,8 +81,7 @@ class pagging
                         $this->redirects('NotFound/');
                     break;
                 case 'profil':
-                    if($this->requestURI[$this->SumOfSub + 2] == null)
-                        include APPPATH."page/profil_pelanggan.php";
+                    include APPPATH."page/profil_pelanggan.php";
                     break;
                 case 'NotFound': 
                     include APPPATH."page/notfound.php";
@@ -94,7 +93,7 @@ class pagging
                     print "<h1>Still Constructing</h1>";
                     break;
                 default:
-                    $this->redirects('NotFound/'); 
+                    $this->redirects('NotFound/');
                     break;
             }
             include APPPATH."page/footer.php";

@@ -14,5 +14,5 @@
         print '<option value="'.$i.'">'.$i.'</option>';
     } ?>
         </select></p>
-    <p><label>&nbsp;</label>&nbsp; <input type="submit" name="submit" value="Daftarkan Kartu Kredit"> atau <a href="">Cukup lewat saja</a></p>
+    <p><label>&nbsp;</label>&nbsp; <input type="submit" name="submit" value="Daftarkan Kartu Kredit"> atau <a href="<?php print HOME_URL; ?>">Cukup lewat saja</a></p>
 </form>

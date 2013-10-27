@@ -70,19 +70,7 @@ class Authentication
                  or trigger_error(mysql_error(),E_USER_ERROR);
 		$record = mysql_fetch_array($query);
 		
-        // Pembentukan password
-		$iv_string = $record['ic'];
-		$jmlCharSandi = strlen($this->__password);
-		$sandi_kiri = substr($this->__password,0,floor($jmlCharSandi / 2));
-		$sandi_kanan = substr($this->__password,floor($jmlCharSandi / 2)+1,$jmlCharSandi - floor($jmlCharSandi / 2));
-		$salt_kiri = substr($this->__sas['setting']['static_salt'],0,3);
-		$salt_kanan = substr($this->__sas['setting']['static_salt'],3,3);
-		$pattern_1 = $iv_string.$sandi_kiri.$sandi_kanan.$salt_kiri;
-		$pattern_2 = $sandi_kanan.$iv_string.$salt_kanan.$sandi_kiri;
-		
-        // Pilih metode hash
-        $sandi['a1'] = hash('sha1',$pattern_1);
-		$sandi['a2'] = hash('sha256',$pattern_2);
+        $sandi = $this->password_generator($record['ic'], $this->__password);
 		
         // Pemecah password yang disimpan dalam database
 		$cek_sandi = explode(':',$record['kata_sandi']);
@@ -95,6 +83,23 @@ class Authentication
 			return FALSE;
 		}
 	}
+    protected function password_generator($ic, $inputsandi) {
+        // Pembentukan password
+		$iv_string = $ic;
+		$jmlCharSandi = strlen($inputsandi);
+		$sandi_kiri = substr($inputsandi,0,floor($jmlCharSandi / 2));
+		$sandi_kanan = substr($inputsandi,floor($jmlCharSandi / 2)+1,$jmlCharSandi - floor($jmlCharSandi / 2));
+		$salt_kiri = substr($this->__sas['setting']['static_salt'],0,3);
+		$salt_kanan = substr($this->__sas['setting']['static_salt'],3,3);
+		$pattern_1 = $iv_string.$sandi_kiri.$sandi_kanan.$salt_kiri;
+		$pattern_2 = $sandi_kanan.$iv_string.$salt_kanan.$sandi_kiri;
+		
+        // Pilih metode hash
+        $sandi['a1'] = hash('sha1',$pattern_1);
+		$sandi['a2'] = hash('sha256',$pattern_2);
+        
+        return $sandi;
+    }
     
     // PUBLIC METHOD
     // -------------------------------------------------------------------------
@@ -120,6 +125,38 @@ class Authentication
                 return null;
         } else 
             return null;
+    }
+    public function getUserID() {
+        return $this->id_num;
+    }
+    public function save($id_num) {
+        $this->id_num = $id_num;
+        $ic = substr(session_id(), 0, 2);
+        $sandi = $this->password_generator($ic, $this->__password);
+        $lsandi = $sandi['a1'].":".$sandi['a2'];
+        
+        $sql = "INSERT INTO __user_login VALUES (";
+        $sql .= mysql_real_escape_string($this->id_num).", ";
+        $sql .= "'".mysql_real_escape_string($this->__username)."', ";
+        $sql .= "'".$lsandi."', ";
+        $sql .= "'".mysql_real_escape_string($ic)."'";
+        $sql .= ")";
+        
+        mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
+    }
+    public function update($id_num) {
+        $this->id_num = $id_num;
+        $ic = substr(session_id(), 0, 2);
+        $sandi = $this->password_generator($ic, $this->__password);
+        $lsandi = $sandi['a1'].":".$sandi['a2'];
+        
+        $sql = "UPDATE __user_login SET ";
+        $sql .= "nama_pengguna = '".mysql_real_escape_string($this->__username)."', ";
+        $sql .= "kata_sandi = '".mysql_real_escape_string($lsandi)."', ";
+        $sql .= "ic = '".mysql_real_escape_string($ic)."' ";
+        $sql .= "WHERE user_id = ".mysql_real_escape_string($this->id_num).";";
+        
+        mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
     }
 }
 ?>
