@@ -10,7 +10,8 @@ var identitas_pelanggan = null;
 
 function myOutput(data) {
 	var result = JSON.parse(data);
-	alert(result.data);
+	var form = document.getElementById("wbd_search");
+	window.location.href = BASE_URL + "cari/?query=" + form.elements[0].value;
 }
 function testA() {
 	var form = document.getElementById("wbd_search");
@@ -35,7 +36,7 @@ function showSubmenuAfterAjax(data) {
 		submenu.appendChild(kontainer);
 		for(var i = 0; i < result.data.length; i++) {
 			var kategori = document.createElement("a");
-			kategori.href = BASE_URL + "kat/" + (i + 1);
+			kategori.href = BASE_URL + "kat/" + (i + 1) + "/";
 			kategori.innerHTML = result.data[i];
 			kontainer.appendChild(kategori);
 		}

@@ -14,7 +14,7 @@ body {
     margin-left:auto;
 	margin-right:auto;
 	position:relative;
-	width: 900px;
+	max-width: 900px;
 }
 #logo {
     padding-top: 20px;
@@ -104,4 +104,115 @@ footer {
     padding-right: 8px;
     text-align: right;
     width: 200px;
+}
+
+/* TAMPILAN SETIAP BARANG DI HOME */
+.box_kategori {
+    padding: 12px;
+}
+.box_kategori .box_nama {
+    display: block;
+    line-height: 3em;
+    margin-left: -4px;
+}
+.box_kategori .box_nama h2 {
+    display: inline-block;
+    padding-right: 12px;
+    margin-top: 6px;
+    margin-bottom: 12px;
+}
+.box_barang {
+    color: #444;
+    margin: 4px;
+    border: solid thin #CCCCCC;
+    display: inline-block;
+    max-height: 200px;
+    width: 120px;
+    text-align: center;
+    padding: 10px;
+}
+.box_barang:hover {
+    border: solid thin black;
+    color: black;
+    -moz-box-shadow: 10px 10px 5px #888;
+    -webkit-box-shadow: 10px 10px 5px #888;
+    box-shadow: 10px 10px 5px #888;
+}
+.box_barang .gambar_barang {
+    width: 100px;
+    height: 100px;
+}
+.box_barang h3 { /* untuk nama barang */
+    display: block;
+    margin: 0px;
+    padding: 0px;
+}
+.box_barang .harga {
+    display: block;
+    margin: 0px;
+    padding: 0px;
+}
+.box_barang > form [name=qty] {
+    width: 30px;
+    margin-right: 10px;
+}
+
+/* TAMPILAN DI HALAMAN KATEGORI */
+.kategori > p {
+    text-align: center;
+    border-bottom: solid black thin;
+}
+.kategori > h1 {
+    margin-left: 12px;
+}
+.kategori > p > a {
+    line-height: 2em;
+}
+.kategori .sorting {
+    padding: 10px;
+    margin-right: 10px;
+}
+.kategori .sorting:hover {
+    text-decoration: underline;
+}
+
+/* TABLE */
+.table {
+    display: table;
+}
+.table > .row {
+    display: table-row;
+    margin-bottom: 10px;
+}
+.table > .row > .column {
+    display: table-cell;
+    padding-bottom: : 4px;
+    padding-left: 10px;
+    padding-top: 4px;
+    padding-right: 10px;
+}
+
+/* TABLE ON SHOPPING BAG */
+.thead {
+    background-color: #CCC;
+    line-height: 2em;
+    font-weight: bold;
+    max-width: 890px;
+}
+.thead span:first-child {
+    text-align: center;
+    min-width: 100px;
+}
+.thead span:nth-child(2) {
+    min-width: 360px;
+}
+.thead span:nth-child(4), .thead span:nth-child(5) {
+    text-align: center;
+    min-width: 140px;
+}
+.tcontent span {
+    vertical-align: middle;
+}
+.tcontent [name^=qty] {
+    width: 30px;
 }

@@ -21,7 +21,7 @@
                 <input type="text" name="search_input" placeholder="Cari disini">
                 <input type="submit" name="submit" value="Cari">
             </form>
-            <a id="keranjang_belanja" class="menu_cell hyperlink" href="#">Keranjang Belanja</a>
+            <a id="keranjang_belanja" class="menu_cell hyperlink" href="<?php print HOME_URL; ?>keranjang/">Keranjang Belanja</a>
         </div></nav>
     </header>
     <article class="container">

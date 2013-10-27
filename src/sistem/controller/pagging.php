@@ -69,8 +69,19 @@ class pagging
             switch ($this->requestURI[$this->SumOfSub + 1])
             {
                 case 'kat':
+                    include APPPATH."page/kategori.php";
+                    break;
                 case NULL:
                     include APPPATH."page/home.php";
+                    break;
+                case 'keranjang':
+                    include APPPATH."page/keranjang_belanja.php";
+                    break;
+                case 'cari':
+                    include APPPATH."page/search_result.php";
+                    break;
+                case 'barang':
+                    include APPPATH."page/barang.php";
                     break;
                 case 'pendaftaran':
                     if($this->requestURI[$this->SumOfSub + 2] == null)
