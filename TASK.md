@@ -23,13 +23,13 @@ Rivai:
     - Tampilan Header dan Footer tanpa JS
       [Sudah]
     - Membuat validasi tingkat javascript
-      [Belum] [Deadline: 26 Oktober 2013]
+      [Belum Seluruh] [60%] [Deadline: 27 Oktober 2013]
     - Membuat halaman barang per kategori barang
-      [Belum] [Deadline: 26 Oktober 2013]
+      [Belum] [Deadline: 27 Oktober 2013]
     - Membuat halaman hasil dari pencarian
-      [Belum] [Deadline: 26 Oktober 2013]
+      [Belum] [Deadline: 27 Oktober 2013]
     - Membuat halaman detail barang
-      [Belum] [Deadline: 26 Oktober 2013]
+      [Belum] [Deadline: 27 Oktober 2013]
 
 Renusa:
     - Database dan konsep store saved
@@ -39,4 +39,4 @@ Renusa:
     - Membuat halaman untuk shopping bag
       [Belum] [Deadline: 27 Oktober 2013]
     - Membuat halaman edit profil pelanggan.
-      [Belum] [Deadline: 27 Oktober 2013]
+      [Sudah] [Belum divalidasi]
