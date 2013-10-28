@@ -399,3 +399,13 @@ function validateQty(fld) {
         parent.elements[2].disabled = true;
     }
 }
+function validateQtyBarang(fld) {
+    var parent = fld.parentNode;
+    if(validateNumber(fld) == "") {
+        fld.style.background = "#99FF00";
+        parent.lastChild.disabled = false;
+    } else {
+        fld.style.background = "Orange";
+        parent.lastChild.disabled = true;
+    }   
+}

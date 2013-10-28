@@ -88,8 +88,8 @@ function loginAfter(data) {
 
 		// Change element on login node
 		var changeelement = document.getElementById('login');
-		changeelement.innerHTML = "Welcome, <a href=\"" + BASE_URL + "profil/\">" + getItemLocalStorage("userData").nama_lengkap + "</a> - ";
-		changeelement.innerHTML += "<a onClick=\"logout()\" href=\"#\">Logout</a>";
+			changeelement.innerHTML = "<a class=\"menu_cell hyperlink\" href=\"" + BASE_URL + "profil/\">Welcome, " + getItemLocalStorage("userData").nama_lengkap + "</a>";
+			changeelement.innerHTML += "<a class=\"menu_cell hyperlink\" onClick=\"logout()\" href=\"#\">Logout</a>";
 		// Remove loginbox node
 		var child = document.getElementById('loginbox');
 		if(child != null) child.parentNode.removeChild(child);
@@ -107,7 +107,7 @@ function logout() {
 
 	// change innerHTML on login node
 	var changeelement = document.getElementById('login');
-	changeelement.innerHTML = "<a href=\"#loginbox\">Masuk</a>";
+	changeelement.innerHTML = "<a class=\"menu_cell hyperlink\" href=\"#loginbox\">Masuk</a>";
 	
 	// Add loginbox node
 	var parent = changeelement.parentNode;
@@ -228,11 +228,55 @@ function addToShoppingChart(field) {
 function addToShoppingBag(id_barang, qty) {
 	var bucket = {"todo":"addToShoppingBag", "data":[
 		{"id_barang":id_barang,
+		 "detail_tambahan" : "",
 		 "qty" : qty
 		}
 	]};
 	sendJSONType(bucket, addToShoppingBagAfter);
 	return false;
+}
+function addToShoppingChartBarang(fld) {
+	var bucket = {"todo":"addToShoppingBag", "data":[
+		{"id_barang":fld.id_barang.value,
+		 "detail_tambahan" : fld.pesan.value,
+		 "qty" : fld.qty.value
+		}
+	]};
+	sendJSONType(bucket, addToShoppingBagAfter);
+	return false;
+}
+function saveToShoppingBag() {
+	var forms = document.getElementById('shopping_bag');
+	var result = new Array();
+	var resulti = new Array();
+	for(var i = 0; i < forms.length - 2; i++) {
+		resulti = {"barang_id" : forms.elements[i].name.substr(4), "qty" : forms.elements[i].value};
+		result[i] = resulti;
+	}
+	var bucket = {"todo":"saveToShoppingBag", "data": result};
+	sendJSONType(bucket, saveToShoppingBagAfter);
+}
+function saveToShoppingBagAfter(data) {
+	var result = JSON.parse(data);
+	if(result.status == "success") {
+	} else {
+		alert(result.data);
+	}
+}
+function buy() {
+	var forms = document.getElementById('shopping_bag');
+	var result = new Array();
+	var resulti = new Array();
+	for(var i = 0; i < forms.length - 2; i++) {
+		resulti = {"id_barang" : forms.elements[i].name.substr(4), "qty" : forms.elements[i].value};
+		result[i] = resulti;
+	}
+	var bucket = {"todo":"buy", "data": result};
+	sendJSONType(bucket, buyAfter);
+}
+function buyAfter(data) {
+	var result = JSON.parse(data);
+	alert(result.data);
 }
 function addToShoppingBagAfter(data) {
 	var result = JSON.parse(data);
@@ -297,8 +341,8 @@ if(typeof(Storage) !== "undefined") {
 			var child = document.getElementById('loginbox');
 			if(child != null) child.parentNode.removeChild(child);
 			var changeelement = document.getElementById('login');
-			changeelement.innerHTML = "Welcome, <a href=\"" + BASE_URL + "profil/\">" + getItemLocalStorage("userData").nama_lengkap + "</a> - ";
-			changeelement.innerHTML += "<a onClick=\"logout()\" href=\"#\">Logout</a>";
+			changeelement.innerHTML = "<a class=\"menu_cell hyperlink\" href=\"" + BASE_URL + "profil/\">Welcome, " + getItemLocalStorage("userData").nama_lengkap + "</a>";
+			changeelement.innerHTML += "<a class=\"menu_cell hyperlink\" onClick=\"logout()\" href=\"#\">Logout</a>";
 
 			// set node keranjang_belanja to visible with inline-block display
 			document.getElementById('keranjang_belanja').style.display = "inline-block";
@@ -309,7 +353,7 @@ if(typeof(Storage) !== "undefined") {
 		}
 	} else { // Not User Data
 		var node = document.getElementById('login');
-		node.innerHTML = "<a href=\"#loginbox\">Masuk</a>";
+		node.innerHTML = "<a class=\"menu_cell hyperlink\" href=\"#loginbox\">Masuk</a>";
 		var parent = node.parentNode;
 		parent.innerHTML += loginformhtml;
 		// set node keranjang_belanja to invisible with none display

@@ -14,21 +14,23 @@ body {
     margin-left:auto;
 	margin-right:auto;
 	position:relative;
-	max-width: 900px;
+	max-width: 950px;
 }
 #logo {
-    padding-top: 20px;
-    padding-bottom: 4px;
+    padding-top: 24px;
+    margin-bottom: -10px;
 }
 #login {
     line-height: 100%;
-    position: absolute;
-    text-align: right;
-    right: 10px;
-    bottom: 10px;
+}
+header {
+    background-image: url(http://localhost/tugas_wbd1/assets/img_style/header.gif);
+    background-repeat: no-repeat;
+    background-position: center top;
+    text-align: center;
 }
 header nav {
-    background-color: #009900;
+    background-color: #CC9900;
     text-align: left;
 }
 header nav .menu_cell {
@@ -53,8 +55,7 @@ header #kategorilist a {
     vertical-align: middle;
 }
 header #kategorilist a:hover {
-    background-color: #CCFFCC;
-    
+    background-color: #FFCCCC;
     box-shadow: inset 0px 2px 3px #888;
     -moz-box-shadow: inset 0px 2px 3px #888;
     -webkit-box-shadow: inset 0px 2px 3px #888;
@@ -68,7 +69,7 @@ header nav a {
     font-weight: bold;
 }
 header nav a:hover {
-    background-color: #006600;
+    background-color: #CC6600;
     color: white;
 }
 footer {
@@ -85,6 +86,13 @@ footer {
     position: absolute; 
     top: 0; 
     right: 0;
+}
+.kategori_group {
+    margin-top: -20px;
+}
+.kategori_group > a {
+    padding-left: 25px;
+    padding-right: 25px;
 }
 
 /* PENDAFTARAN */
@@ -227,5 +235,16 @@ footer {
     vertical-align: middle;
 }
 .tcontent [name^=qty] {
+    width: 30px;
+}
+
+/* DETAIL BARANG */
+.barang textarea {
+    min-width: 400px;
+    max-width: 400px;
+    min-height: 50px;
+    max-height: 50px;
+}
+.barang [name=qty] {
     width: 30px;
 }

@@ -173,8 +173,9 @@ class JsonResponder
         print json_encode($data);
     }
     public function addToShoppingBag($param) {
+        $isStokAvailable = true;
         // Check barang
-        $sql = "SELECT nama, harga FROM barang_data WHERE barang_id = ".mysql_real_escape_string($param[0]['id_barang']).";";
+        $sql = "SELECT barang_data.nama, barang_data.harga, barang_stok.stok FROM barang_data INNER JOIN barang_stok ON barang_data.barang_id = barang_stok.barang_id WHERE barang_data.barang_id = ".mysql_real_escape_string($param[0]['id_barang'])." AND stok > ".$param[0]['qty'].";";
         $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
         if(mysql_num_rows($query) == 1) {        
             if(isset($_SESSION['shopping_bag'])) {
@@ -183,6 +184,7 @@ class JsonResponder
                 for($i = 0; $i < count($barang['data']); $i++) {
                     if($barang['data'][$i]['id_barang'] == $param[0]['id_barang']) {
                         $barang['data'][$i]['qty'] += $param[0]['qty'];
+                        if($param[0]['detail_tambahan'] != "") $barang['data'][$i]['detail_tambahan'] += "<br>".$param[0]['detail_tambahan'];
                         $found = true;
                         break;
                     }
@@ -206,11 +208,98 @@ class JsonResponder
             
             print json_encode($data);
         } else {
-            $data = array("status" => "failed", "data" => "Barang id tidak ada");
+            $data = array("status" => "failed", "data" => "Barang id tidak ada atau stok kami kurang dari ".$param[0]['qty'].".");
             print json_encode($data);
         }
     }
-    function checkCreditCardNumber($param) {
+    public function saveToShoppingBag($param) {
+        $barang = json_decode($_SESSION['shopping_bag'], true);
+        for($i = 0; $i < count($barang['data']); $i++) {
+            for($j = 0; $j < count($param); $j++) {
+                if($barang['data'][$i]['id_barang'] == $param[$j]['barang_id']) {
+                    $barang['data'][$i]['qty'] = $param[$j]['qty'];
+                    break;
+                }
+            }
+        }
+        $result = array("data" => array());
+        foreach($barang['data'] as $elemen) {
+            if($elemen['qty'] > 0) {
+                $result['data'][] = $elemen;
+            }
+        }
+        $_SESSION['shopping_bag'] = json_encode($result);
+        
+        print json_encode(array("status" => "success", "data" => ""));
+    }
+    public function buy($param) {
+        $result = array("data" => array());
+        foreach($param as $elemen) {
+            if($elemen['qty'] > 0) {
+                $result['data'][] = $elemen;
+            }
+        }
+        $barang = $result;
+        
+        $ids_barang = array();
+        foreach($barang['data'] as $elemen) {
+            $ids_barang[] = $elemen['id_barang'];
+        }
+        
+        // CHECK STOCK
+        $sql = "SELECT barang_id, stok FROM barang_stok WHERE barang_id IN (".implode(',',$ids_barang).") GROUP BY barang_id ASC;";
+        $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
+        
+        // Check Quantity
+        $found_lesttqty = false;
+        for($i = 0; !$found_lesttqty && $row = mysql_fetch_assoc($query); $i++) {
+            foreach($barang['data'] as $elemen) {
+                if($row['barang_id'] == $elemen['id_barang']) {
+                    if($row['stok'] < $elemen['qty']) 
+                        $found_lesttqty = true;
+                    break;
+                }
+            }
+        }
+        if($found_lesttqty) {
+            $_SESSION['shopping_bag'] = json_encode($barang);
+            
+            print json_encode(array("status" => "failed", "data" => "Ada barang stoknya kurang"));
+        } else {
+            // get new transaksi_id
+            $sql = "SELECT (transaksi_id + 1) AS new_transaksiid FROM transaksi GROUP BY transaksi_id DESC LIMIT 0, 1;";
+            $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
+            if(mysql_num_rows($query) != 0) {
+                $row = mysql_fetch_array($query);
+                $new_transaksiid = $row['new_transaksiid'];
+            } else {
+                $new_transaksiid = 1;
+            }
+            
+            // INSERT
+            $sql = "INSERT INTO transaksi VALUES ";
+            for($i = 0; $i < count($barang['data']); $i++) {
+                $sql .= "(".mysql_real_escape_string($new_transaksiid).", ".mysql_real_escape_string($barang['data'][$i]['id_barang']).", ".mysql_real_escape_string($barang['data'][$i]['qty']).")";
+                if($i + 1 < count($barang['data'])) {
+                    $sql .= ", ";
+                } else {
+                    $sql .= ";";
+                }
+            }
+            mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
+            
+            // UPDATE STOK
+            foreach($barang['data'] as $elemen) {
+                $sql = "UPDATE barang_stok SET stok = stok - ".$elemen['qty']." WHERE barang_id = ".$elemen['id_barang'].";";
+                mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
+            }
+            
+            unset($_SESSION['shopping_bag']);
+            
+            print json_encode(array("status" => "success", "data" => "Anda telah berhasil beli."));
+        }
+    }
+    public function checkCreditCardNumber($param) {
         $number = str_replace("-","",$param);
         if($this->is_valid_luhn($number)) {
             $data = array("status" => "valid", "data" => "");
@@ -219,7 +308,7 @@ class JsonResponder
         }
         print json_encode($data);
     }
-    function daftarCreditCard($param) {
+    public function daftarCreditCard($param) {
         if(($param['bulan'] > Date("n") && $param['tahun'] >= Date("Y")) || ($param['tahun'] > Date("Y"))) {
             include SYSTEMPATH."controller/process.php";
             $proses = new process;

@@ -57,16 +57,28 @@ class process
         $this->__kategori_id = $kategori_id;
         
         // select category name from DB
-        $sql = "SELECT nama FROM barang_kategori WHERE kategori_id = ".mysql_real_escape_string($kategori_id).";";
+        $sql = "SELECT kategori_nama FROM barang_kategori WHERE kategori_id = ".mysql_real_escape_string($kategori_id).";";
         $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
         $row = mysql_fetch_array($query);
-        $result['nama_kategori'] = $row['nama'];
+        $result['nama_kategori'] = $row['kategori_nama'];
         
         // select good from DB
         $sql = "SELECT barang_id, nama, harga, image_url FROM barang_data WHERE kategori_id = ".mysql_real_escape_string($kategori_id).";";
         $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
         while($row = mysql_fetch_assoc($query)) {
             $result['data'][] = $row;
+        }
+        
+        return $result;
+    }
+    public function showBarang($barang) {
+        $result = array();
+        
+        // select good from DB
+        $sql = "SELECT barang_id, nama, harga, image_url, deskripsi FROM barang_data WHERE barang_id = ".mysql_real_escape_string($barang).";";
+        $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
+        while($row = mysql_fetch_assoc($query)) {
+            $result = $row;
         }
         
         return $result;
@@ -82,10 +94,10 @@ class process
         $this->__kategori_id = $kategori_id;
         
         // select category name from DB
-        $sql = "SELECT nama FROM barang_kategori WHERE kategori_id = ".mysql_real_escape_string($kategori_id).";";
+        $sql = "SELECT kategori_nama FROM barang_kategori WHERE kategori_id = ".mysql_real_escape_string($kategori_id).";";
         $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
         $row = mysql_fetch_array($query);
-        $result['nama_kategori'] = $row['nama'];
+        $result['nama_kategori'] = $row['kategori_nama'];
         
         // select good from DB
         $sql = "SELECT barang_id, nama, harga, image_url FROM barang_data WHERE kategori_id = ".mysql_real_escape_string($kategori_id);
@@ -102,25 +114,30 @@ class process
             return null;
         } else {
             $temp1 = json_decode($_SESSION['shopping_bag'], true);
-            $ids_barang = array();
-            foreach($temp1['data'] as $elemen) {
-                $ids_barang[] = $elemen['id_barang'];
-            }
-            
-            // select barang
-            $sql = "SELECT barang_id, nama, harga, image_url, deskripsi FROM barang_data WHERE barang_id IN (".implode(',',$ids_barang).") GROUP BY barang_id ASC;";
-            $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
-            $result['total'] = 0;
-            for($i = 0; $row = mysql_fetch_assoc($query); $i++) {
-                $result['data'][$i] = $row;
-                for($j = 0; $j < count($temp1['data']); $j++) {
-                    if($row['barang_id'] == $temp1['data'][$j]['id_barang']) {
-                        $result['data'][$i]['qty'] = $temp1['data'][$j]['qty'];
-                    }
+            if(count($temp1['data']) > 0) {
+                $ids_barang = array();
+                foreach($temp1['data'] as $elemen) {
+                    $ids_barang[] = $elemen['id_barang'];
                 }
-                $result['total'] += $result['data'][$i]['qty']*$result['data'][$i]['harga'];
+                
+                // select barang
+                $sql = "SELECT barang_id, nama, harga, image_url, deskripsi FROM barang_data WHERE barang_id IN (".implode(',',$ids_barang).") GROUP BY barang_id ASC;";
+                $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
+                $result['total'] = 0;
+                for($i = 0; $row = mysql_fetch_assoc($query); $i++) {
+                    $result['data'][$i] = $row;
+                    for($j = 0; $j < count($temp1['data']); $j++) {
+                        if($row['barang_id'] == $temp1['data'][$j]['id_barang']) {
+                            $result['data'][$i]['qty'] = $temp1['data'][$j]['qty'];
+                            $result['data'][$i]['detail_tambahan'] = $temp1['data'][$j]['detail_tambahan'];
+                        }
+                    }
+                    $result['total'] += $result['data'][$i]['qty']*$result['data'][$i]['harga'];
+                }
+                return $result;
+            } else {
+                return null;
             }
-            return $result;
         }
     }
     public function daftarKartuKredit($user_id, $nomor_kartu, $pemilik, $bulan_exp, $tahun_exp) {

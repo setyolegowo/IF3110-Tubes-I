@@ -16,6 +16,22 @@ Setyo:
       [Sudah] [Belum divalidasi]
     - Membuat mekanisme penggunaan Local Storage
       [Sudah] [Belum divalidasi]
+    - Membuat mekanisme penyimpanan data shopping bag
+      [Sudah] [Belum divalidasi]
+    - Merge layout dari Vai
+      [Sudah] [Belum divalidasi]
+    - Paginasi
+      [Belum]
+    - Check sebelum beli apakah kartu kredit sudah didaftarkan atau belum
+      [Belum]
+    - Otomatisasi melihat profil saat mulai masuk profil
+      [Belum]
+    - Error pada shorting
+      [Belum]
+    - Auto suggestion
+      [Belum]
+    - Filter untuk harga atau kategori
+      [Belum]
     
 Rivai:
     - Konsep layout HTML
@@ -23,13 +39,13 @@ Rivai:
     - Tampilan Header dan Footer tanpa JS
       [Sudah]
     - Membuat validasi tingkat javascript
-      [Belum Seluruh] [60%] [Deadline: 27 Oktober 2013]
+      [Belum Seluruh] [80%] [Deadline: 27 Oktober 2013]
     - Membuat halaman barang per kategori barang
-      [Belum] [Deadline: 27 Oktober 2013]
+      [Sudah] [Belum divalidasi]
     - Membuat halaman hasil dari pencarian
       [Belum] [Deadline: 27 Oktober 2013]
     - Membuat halaman detail barang
-      [Belum] [Deadline: 27 Oktober 2013]
+      [Sudah] [Belum divalidasi]
 
 Renusa:
     - Database dan konsep store saved
@@ -37,6 +53,6 @@ Renusa:
     - Membuat data utama (non dummy) + gambar produk atau barang
       [Belum] [Deadline: 27 Oktober 2013]
     - Membuat halaman untuk shopping bag
-      [Belum] [Deadline: 27 Oktober 2013]
+      [Sudah] [Belum divalidasi]
     - Membuat halaman edit profil pelanggan.
       [Sudah] [Belum divalidasi]

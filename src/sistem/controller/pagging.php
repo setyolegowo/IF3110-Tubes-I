@@ -89,6 +89,7 @@ class pagging
                     include APPPATH."page/search_result.php";
                     break;
                 case 'barang':
+                    $barang = $proses->showBarang($this->requestURI[$this->SumOfSub + 2]);
                     include APPPATH."page/barang.php";
                     break;
                 case 'pendaftaran':
