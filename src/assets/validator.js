@@ -86,6 +86,15 @@ function validateCreditCard(fld) {
     }
     return error;
 }
+function validateNumber(fld) {
+    var error = "";
+    var legalChars = /^([1-9]|[1-9][0-9]+)$/;
+
+    if (!legalChars.test(fld.value)) {
+        error = "Karakter yang dimasukkan tidak memenuhi syarat kartu kredit.\n";
+    }
+    return error;
+}
 
 /* ------------------------------------------------------------------------- */
 /*                        IMPLEMENTATION PENDAFTARAN                         */
@@ -216,6 +225,57 @@ function pendaftaranEmailAfter(data) {
 }
 
 /* ------------------------------------------------------------------------- */
+/*                      IMPLEMENTATION REG CREDIT CARD                       */
+/* ------------------------------------------------------------------------- */
+var regCreditCard = [false, false];
+function regCCSubmit(number_field, set) {
+    regCreditCard[number_field] = set;
+    var i;
+    for(i = 0; i < regCreditCard.length; i++) {
+        if(!regCreditCard[i]) break;
+    }
+    var parent = document.getElementById('daftar_kartukredit');
+    var child = parent.getElementsByTagName("input");
+    if(i < regCreditCard.length) {
+        child[child.length - 1].disabled = true;
+    } else {
+        child[child.length - 1].disabled = false;
+    }
+}
+function regCCNumber(fld) {
+    if(validateCreditCard(fld) == "") {
+        var bucket = {"todo":"checkCreditCardNumber", "data":fld.value};
+        sendJSONType(bucket, regCCNumberAfter);
+        fld.style.background = "Gray";
+    } else {
+        fld.style.background = "Yellow";
+        regCCSubmit(0, false);
+    }
+}
+function regCCNumberAfter(data) {
+    var parent = document.getElementById('daftar_kartukredit');
+    var child = parent.getElementsByTagName("input");
+    fld = child[0];
+    var result = JSON.parse(data);
+    if(result.status == "valid") {
+        fld.style.background = "White";
+        regCCSubmit(0, true);
+    } else {
+        regCCSubmit(0, false);
+        fld.style.background = "Yellow";
+    }
+}
+function regCCName(fld) {
+    if(validateFullname(fld) == "") {
+        fld.style.background = "White";
+        regCCSubmit(1, true);
+    } else {
+        fld.style.background = "Red";
+        regCCSubmit(1, false);
+    }
+}
+
+/* ------------------------------------------------------------------------- */
 /*                      IMPLEMENTATION EDIT IDENTITAS                        */
 /* ------------------------------------------------------------------------- */
 var editIdentiasAriValid = [true,true,true,false,false,false,false,false];
@@ -326,5 +386,16 @@ function editProfilNoHP(fld) {
     } else {
         fld.style.background = "White";
         editProfilSubmit(7, true);
+    }
+}
+/* ADD TO SHOPPING BAG */
+function validateQty(fld) {
+    var parent = fld.parentNode;
+    if(validateNumber(fld) == "") {
+        fld.style.background = "#99FF00";
+        parent.elements[2].disabled = false;
+    } else {
+        fld.style.background = "Orange";
+        parent.elements[2].disabled = true;
     }
 }

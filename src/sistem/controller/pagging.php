@@ -50,7 +50,7 @@ class pagging
             if($this->requestURI[$this->SumOfSub + 2] == null) {
                 // $bucket = json_decode($_POST['data'], true);
                 // $data = array("nama" => $_POST['name']);
-                print json_encode($_POST['data']);
+                print var_dump($_POST);
             } else if($this->requestURI[$this->SumOfSub + 2] == 'json' && 
                       $this->requestURI[$this->SumOfSub + 3] == null) {
                 include SYSTEMPATH."library/jsonresponder.php";
@@ -61,6 +61,8 @@ class pagging
                 } else {
                     print json_encode(array("data" => "Method salah"));
                 }
+            } else {
+                exit("error");
             }
         } else {
             include SYSTEMPATH."controller/process.php";
@@ -69,12 +71,18 @@ class pagging
             switch ($this->requestURI[$this->SumOfSub + 1])
             {
                 case 'kat':
+                    if($this->requestURI[$this->SumOfSub + 3] == null || $this->requestURI[$this->SumOfSub + 3] == "") {
+                        $kategori = $proses->showKategoriNonFilter($this->requestURI[$this->SumOfSub + 2]);
+                    } else {
+                        $kategori = $proses->showKategoriWithFilter($this->requestURI[$this->SumOfSub + 2], $this->requestURI[$this->SumOfSub + 3]);
+                    }
                     include APPPATH."page/kategori.php";
                     break;
                 case NULL:
                     include APPPATH."page/home.php";
                     break;
                 case 'keranjang':
+                    $keranjang = $proses->showShoppingBag();
                     include APPPATH."page/keranjang_belanja.php";
                     break;
                 case 'cari':

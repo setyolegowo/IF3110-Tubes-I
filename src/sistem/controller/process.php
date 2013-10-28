@@ -16,6 +16,7 @@ class process
         global $connection, $sas;
         $this->__connection = $connection;
         $this->__sas = $sas;
+        $this->__id_num = 0;
     }
     
     // INTERNAL METHOD
@@ -50,6 +51,100 @@ class process
     }
     public function getUserID() {
         return $this->__id_num;
+    }
+    public function showKategoriNonFilter($kategori_id) {
+        $result = array();
+        $this->__kategori_id = $kategori_id;
+        
+        // select category name from DB
+        $sql = "SELECT nama FROM barang_kategori WHERE kategori_id = ".mysql_real_escape_string($kategori_id).";";
+        $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
+        $row = mysql_fetch_array($query);
+        $result['nama_kategori'] = $row['nama'];
+        
+        // select good from DB
+        $sql = "SELECT barang_id, nama, harga, image_url FROM barang_data WHERE kategori_id = ".mysql_real_escape_string($kategori_id).";";
+        $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
+        while($row = mysql_fetch_assoc($query)) {
+            $result['data'][] = $row;
+        }
+        
+        return $result;
+    }
+    public function showKategoriWithFilter($kategori_id, $parameter) {
+        $params = substr($parameter, 1);
+        $each = explode('&', $params);
+        $elemen = explode('=', $each[0]);
+        $by = $elemen[1];
+        $elemen = explode('=', $each[1]);
+        $sort = $elemen[1];
+        $result = array();
+        $this->__kategori_id = $kategori_id;
+        
+        // select category name from DB
+        $sql = "SELECT nama FROM barang_kategori WHERE kategori_id = ".mysql_real_escape_string($kategori_id).";";
+        $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
+        $row = mysql_fetch_array($query);
+        $result['nama_kategori'] = $row['nama'];
+        
+        // select good from DB
+        $sql = "SELECT barang_id, nama, harga, image_url FROM barang_data WHERE kategori_id = ".mysql_real_escape_string($kategori_id);
+        $sql .= " GROUP BY ".mysql_real_escape_string($by)." ".mysql_real_escape_string($sort).";";
+        $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
+        while($row = mysql_fetch_assoc($query)) {
+            $result['data'][] = $row;
+        }
+        
+        return $result;
+    }
+    public function showShoppingBag() {
+        if(!isset($_SESSION['shopping_bag'])) {
+            return null;
+        } else {
+            $temp1 = json_decode($_SESSION['shopping_bag'], true);
+            $ids_barang = array();
+            foreach($temp1['data'] as $elemen) {
+                $ids_barang[] = $elemen['id_barang'];
+            }
+            
+            // select barang
+            $sql = "SELECT barang_id, nama, harga, image_url, deskripsi FROM barang_data WHERE barang_id IN (".implode(',',$ids_barang).") GROUP BY barang_id ASC;";
+            $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
+            $result['total'] = 0;
+            for($i = 0; $row = mysql_fetch_assoc($query); $i++) {
+                $result['data'][$i] = $row;
+                for($j = 0; $j < count($temp1['data']); $j++) {
+                    if($row['barang_id'] == $temp1['data'][$j]['id_barang']) {
+                        $result['data'][$i]['qty'] = $temp1['data'][$j]['qty'];
+                    }
+                }
+                $result['total'] += $result['data'][$i]['qty']*$result['data'][$i]['harga'];
+            }
+            return $result;
+        }
+    }
+    public function daftarKartuKredit($user_id, $nomor_kartu, $pemilik, $bulan_exp, $tahun_exp) {
+        $date = $tahun_exp."-".$bulan_exp."-01";
+        // Check udah ada atau belum
+        $sql = "SELECT user_id FROM pelanggan_card WHERE user_id = ".mysql_real_escape_string($user_id).";";
+        $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
+        if(mysql_num_rows($query) == 0) {        
+            // Langsung masukin saja
+            $sql  = "INSERT INTO pelanggan_card VALUES (";
+            $sql .= mysql_real_escape_string($user_id).", ";
+            $sql .= "'".mysql_real_escape_string($nomor_kartu)."', ";
+            $sql .= "'".mysql_real_escape_string($pemilik)."', ";
+            $sql .= "'".mysql_real_escape_string($date)."'";
+            $sql .= ");";
+        } else {
+            $sql  = "UPDATE pelanggan_card SET ";
+            $sql .= "card_number = '".mysql_real_escape_string($nomor_kartu)."', ";
+            $sql .= "card_name = '".mysql_real_escape_string($pemilik)."', ";
+            $sql .= "card_expiry = '".mysql_real_escape_string($date)."'";
+            $sql .= ";";
+        }
+        
+        mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
     }
 }
 ?>

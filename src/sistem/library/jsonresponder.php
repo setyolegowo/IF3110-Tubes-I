@@ -17,6 +17,21 @@ class JsonResponder
 		$this->__connection = $connection;
     }
     
+    // INTERNAL METHOD
+    // -------------------------------------------------------------------------
+    protected function is_valid_luhn($number) {
+        // settype($number, 'string');
+        $sumTable = array(
+            array(0,1,2,3,4,5,6,7,8,9),
+            array(0,2,4,6,8,1,3,5,7,9));
+        $sum = 0;
+        $flip = 0;
+        for ($i = strlen($number) - 1; $i >= 0; $i--) {
+            $sum += $sumTable[$flip++ & 0x1][$number[$i]];
+        }
+        return $sum % 10 === 0;
+    }
+    
     // PUBLIC METHOD
     // -------------------------------------------------------------------------
     public function subkategori($param) {
@@ -155,6 +170,64 @@ class JsonResponder
             "user_phone" => $param[0]['no_hp']
         ));
         
+        print json_encode($data);
+    }
+    public function addToShoppingBag($param) {
+        // Check barang
+        $sql = "SELECT nama, harga FROM barang_data WHERE barang_id = ".mysql_real_escape_string($param[0]['id_barang']).";";
+        $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
+        if(mysql_num_rows($query) == 1) {        
+            if(isset($_SESSION['shopping_bag'])) {
+                $found = false;
+                $barang = json_decode($_SESSION['shopping_bag'], true);
+                for($i = 0; $i < count($barang['data']); $i++) {
+                    if($barang['data'][$i]['id_barang'] == $param[0]['id_barang']) {
+                        $barang['data'][$i]['qty'] += $param[0]['qty'];
+                        $found = true;
+                        break;
+                    }
+                }
+                if(!$found) {
+                    $barang['data'][] = $param[0];
+                }
+            } else {
+                $barang = array("data" => array());
+                $barang['data'][] = $param[0];
+            }
+            $_SESSION['shopping_bag'] = json_encode($barang);
+            
+            $row = mysql_fetch_array($query);
+            $data = array("status" => "success", "data" => array(
+                "nama_barang" => $row['nama'],
+                "harga" => $row['harga'],
+                "qty" => $param[0]['qty'],
+                "total_barang_keranjang" => count($barang['data'])
+            ));
+            
+            print json_encode($data);
+        } else {
+            $data = array("status" => "failed", "data" => "Barang id tidak ada");
+            print json_encode($data);
+        }
+    }
+    function checkCreditCardNumber($param) {
+        $number = str_replace("-","",$param);
+        if($this->is_valid_luhn($number)) {
+            $data = array("status" => "valid", "data" => "");
+        } else {
+            $data = array("status" => "invalid", "data" => "");
+        }
+        print json_encode($data);
+    }
+    function daftarCreditCard($param) {
+        if(($param['bulan'] > Date("n") && $param['tahun'] >= Date("Y")) || ($param['tahun'] > Date("Y"))) {
+            include SYSTEMPATH."controller/process.php";
+            $proses = new process;
+            $proses->daftarKartuKredit($param['user_id'], $param['nomor_kartu'], $param['nama_pemilik'], $param['bulan'], $param['tahun']);
+            $data = array("status" => "success");
+        } else {
+            $data = array("status" => "failed", "data" => "Date is not valid.");
+        }
         print json_encode($data);
     }
 }

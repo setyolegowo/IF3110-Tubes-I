@@ -1,21 +1,17 @@
 <div class="kategori">
-    <h1>Nama Kategori</h1>
+    <h1><?php print $kategori['nama_kategori']; ?></h1>
     <p>
-        <a class="sorting" href="#">Sorting By Name Ascending</a>
-        <a class="sorting" href="#">Sorting By Name Descending</a>
-        <a class="sorting" href="#">Sorting By Price Ascending</a>
-        <a class="sorting" href="#">Sorting By Price Descending</a>
+        <a class="sorting" href="?by=nama&sort=asc">Sorting By Name Ascending</a>
+        <a class="sorting" href="?by=nama&sort=desc">Sorting By Name Descending</a>
+        <a class="sorting" href="?by=harga&sort=asc">Sorting By Price Ascending</a>
+        <a class="sorting" href="?by=harga&sort=desc">Sorting By Price Descending</a>
     </p>
-    <a class="box_barang" href="<?php print HOME_URL; ?>barang/1">
-        <img class="gambar_barang" src="<?php print HOME_URL; ?>assets/image/default.png" alt="Default" height="100" width="100">
-        <h3>Nama Barang</h3>
-        <span class="harga">Rp.3000,00</span>
-        <form><input type="text" name="qty"><input type="submit" value="+"></form>
-    </a>
-    <a class="box_barang" href="<?php print HOME_URL; ?>barang/2">
-        <img class="gambar_barang" src="<?php print HOME_URL; ?>assets/image/default.png" alt="Default" height="100" width="100">
-        <h3>Nama Barang</h3>
-        <span class="harga">Rp.3000,00</span>
-        <form><input type="text" name="qty"><input type="submit" value="+"></form>
-    </a>
+    <?php foreach($kategori['data'] as $barang) { ?>
+    <div class="box_barang">
+        <img class="gambar_barang" src="<?php if($barang['image_url'] == "" || $barang['image_url'] == null) print HOME_URL."assets/image/default.png"; else print urldecode($barang['image_url']) ?>" alt="Default" height="100" width="100">
+        <a href="<?php print HOME_URL."barang/".$barang['barang_id']; ?>"><?php print $barang['nama']; ?></a>
+        <span class="harga">Rp.<?php print number_format($barang['harga'], 2, ',', '.'); ?></span>
+        <form onSubmit="return addToShoppingChart(this)"><input type="hidden" name="id_barang" value="<?php print $barang['barang_id']; ?>"><input type="text" name="qty" onKeyUp="validateQty(this)"><input type="submit" value="+" disabled="disabled"></form>
+    </div>
+    <?php } ?>
 </div>

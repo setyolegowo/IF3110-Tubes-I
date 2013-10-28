@@ -17,11 +17,11 @@
         <nav><div class="container">
             <a class="menu_cell hyperlink" href="<?php print HOME_URL; ?>">Home</a>
             <a class="menu_cell hyperlink" href="#" onClick="showSubmenu()">Kategori</a>
-            <form id="wbd_search" style="position: absolute; top: 0; right: 0" class="menu_cell" onSubmit="return testA()">
+            <form id="wbd_search" class="menu_cell" onSubmit="return testA()">
                 <input type="text" name="search_input" placeholder="Cari disini">
                 <input type="submit" name="submit" value="Cari">
             </form>
-            <a id="keranjang_belanja" class="menu_cell hyperlink" href="<?php print HOME_URL; ?>keranjang/">Keranjang Belanja</a>
+            <a id="keranjang_belanja" class="menu_cell hyperlink" href="<?php print HOME_URL; ?>keranjang/">Keranjang Belanja <?php if(isset($_SESSION['shopping_bag'])) { $result = json_decode($_SESSION['shopping_bag'], true); print '<span id="total_keranjang">'.count($result['data']).'</span>'; } ?></a>
         </div></nav>
     </header>
     <article class="container">

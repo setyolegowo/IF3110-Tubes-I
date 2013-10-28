@@ -38,7 +38,7 @@ CREATE TABLE `__session_handler` (
 
 LOCK TABLES `__session_handler` WRITE;
 /*!40000 ALTER TABLE `__session_handler` DISABLE KEYS */;
-INSERT INTO `__session_handler` VALUES ('16ptijgcioarj3b0vsoud0u6u4',0,'2013-10-23 15:32:20',1382517140,''),('739cs38ccu4v06d3rc0pqs5151',0,'2013-10-23 14:29:40',1382513380,''),('8jk9eauonu24kknpq5n2m836b4',0,'2013-10-23 23:48:42',1382546922,''),('97ao7isg7kkqr9fhapostl3ul4',0,'2013-10-27 12:19:48',1382851188,'info|a:1:{i:2;b:0;}'),('9e727h9c1ck9bejr0hme8tjgt5',0,'2013-10-26 19:01:41',1382788901,''),('a9hdna3vt6o4ree9eno91subp4',0,'2013-10-20 06:44:08',1382226248,''),('avdg6fimj4232ddtols1qijpu0',0,'2013-10-27 12:16:51',1382851011,'info|a:2:{i:4;b:0;i:2;b:0;}'),('c4jj0o2ln8f0jc6vp760jk6613',0,'2013-10-25 18:20:35',1382700035,'info|a:1:{i:2;b:0;}'),('dbbt1olrcso00o4mfrfg4vpef4',0,'2013-10-23 19:12:02',1382530322,''),('giul0fnvki61mbq2peec4muvm4',0,'2013-10-24 22:00:44',1382626844,''),('hr2537ha2g7occ5l4k41pv35i6',0,'2013-10-25 21:02:38',1382709758,'info|a:2:{i:1;b:0;i:2;b:0;}'),('l1ikdssdlbcp5qit8ht47td0o2',0,'2013-10-23 21:30:55',1382538655,''),('n4otk61pvrci16cccqt981vs85',0,'2013-10-23 13:33:29',1382510009,''),('t0a3bm11i1pjagmb5dbl39dgd1',0,'2013-10-26 23:34:17',1382805257,'');
+INSERT INTO `__session_handler` VALUES ('0mrebr09r6oea814s22dpr1me5',0,'2013-10-28 06:18:45',1382915925,''),('3vjj6jsj70faf8b2ign1bcmrc5',0,'2013-10-28 08:11:53',1382922713,'shopping_bag|s:92:\"{\"data\":[{\"id_barang\":\"1\",\"qty\":3},{\"id_barang\":\"7\",\"qty\":\"2\"},{\"id_barang\":\"8\",\"qty\":\"2\"}]}\";'),('8qede0fk1v2jn0rh9hr08vlhs2',0,'2013-10-28 06:23:00',1382916180,'shopping_bag|s:38:\"{\"data\":[{\"id_barang\":\"1\",\"qty\":\"1\"}]}\";'),('idjt0ouf7j98mm1cqc6ppfvou0',0,'2013-10-28 06:13:10',1382915590,'shopping_bag|s:38:\"{\"data\":[{\"id_barang\":\"1\",\"qty\":\"1\"}]}\";'),('jbf8cm9f515qrdebhp7oucscc7',0,'2013-10-28 06:23:20',1382916200,''),('vbikuv6ltu2b2gl458jt8n1d06',0,'2013-10-28 06:21:57',1382916117,'');
 /*!40000 ALTER TABLE `__session_handler` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,7 +189,7 @@ DROP TABLE IF EXISTS `pelanggan_card`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pelanggan_card` (
   `user_id` int(5) NOT NULL,
-  `card_number` int(16) NOT NULL,
+  `card_number` varchar(22) NOT NULL,
   `card_name` varchar(50) NOT NULL,
   `card_expiry` date NOT NULL,
   PRIMARY KEY (`user_id`),
@@ -203,6 +203,7 @@ CREATE TABLE `pelanggan_card` (
 
 LOCK TABLES `pelanggan_card` WRITE;
 /*!40000 ALTER TABLE `pelanggan_card` DISABLE KEYS */;
+INSERT INTO `pelanggan_card` VALUES (1,'4539-3937-3970-1127','Setyo Legowo','2014-01-01');
 /*!40000 ALTER TABLE `pelanggan_card` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -295,4 +296,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-27 12:20:27
+-- Dump completed on 2013-10-28  8:15:40

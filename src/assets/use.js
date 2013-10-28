@@ -222,6 +222,52 @@ function submitEditIdentity(forms) {
 	sendJSONType(bucket, getMoreIdentityAfter);
 	return false;
 }
+function addToShoppingChart(field) {
+	return addToShoppingBag(field.id_barang.value, field.qty.value);
+}
+function addToShoppingBag(id_barang, qty) {
+	var bucket = {"todo":"addToShoppingBag", "data":[
+		{"id_barang":id_barang,
+		 "qty" : qty
+		}
+	]};
+	sendJSONType(bucket, addToShoppingBagAfter);
+	return false;
+}
+function addToShoppingBagAfter(data) {
+	var result = JSON.parse(data);
+	if(result.status == "success") {
+		alert("Berhasil menambahkan barang " + result.data.nama_barang + " sejumlah " + result.data.qty);
+		var node = document.getElementById('total_keranjang');
+		if(node != null) node.innerHTML = result.data.total_barang_keranjang;
+		else {
+			var node = document.getElementById('keranjang_belanja');
+			node.innerHTML = "Keranjang Belanja <span id=\"total_keranjang\">" + result.data.total_barang_keranjang + "</span>";
+		}
+	} else {
+		alert(result.data);
+	}
+}
+function submitCreditCard(fld) {
+	var bucket = {"todo":"daftarCreditCard", "data":
+		{"user_id":getItemLocalStorage("userData").user_id,
+		 "nomor_kartu" : fld.nomor_kartu.value,
+		 "nama_pemilik" : fld.nama_kartu.value,
+		 "bulan" : fld.bulan.value,
+		 "tahun" : fld.tahun.value
+		}
+	};
+	sendJSONType(bucket, submitCreditCardAfter);
+	return false;
+}
+function submitCreditCardAfter(data) {
+	var result = JSON.parse(data);
+	if(result.status == "success") {
+		window.location.href = BASE_URL;
+	} else {
+		alert(result.data);
+	}
+}
 
 /* ------------------------------------------------------------------------- */
 /*                                LOCAL STORAGE                              */
