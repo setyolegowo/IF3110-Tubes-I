@@ -71,11 +71,29 @@ class pagging
             switch ($this->requestURI[$this->SumOfSub + 1])
             {
                 case 'kat':
-                    if($this->requestURI[$this->SumOfSub + 3] == null || $this->requestURI[$this->SumOfSub + 3] == "") {
-                        $kategori = $proses->showKategoriNonFilter($this->requestURI[$this->SumOfSub + 2]);
-                    } else {
-                        $kategori = $proses->showKategoriWithFilter($this->requestURI[$this->SumOfSub + 2], $this->requestURI[$this->SumOfSub + 3]);
-                    }
+					$sql = "SELECT DISTINCT COUNT(*) AS total FROM barang_data WHERE kategori_id = ".mysql_real_escape_string($this->requestURI[$this->
+						SumOfSub + 2]).";";
+					$query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
+					$row = mysql_fetch_array($query);
+					
+					$sisa = $row['total'] % 10;
+					$page_no = (($row['total'] - $sisa)/10) + 1;
+					$params = substr($this->requestURI[$this->SumOfSub + 3],1);
+					$each = explode('=', $params);
+					$filter = true;
+					if ($each[0] == "page") $filter = false;
+					
+					if ($this->requestURI[$this->SumOfSub + 3] == null || $this->requestURI[$this->SumOfSub + 3] == ""){
+						$kategori = $proses->showKategoriNonFilter($this->requestURI[$this->
+						SumOfSub + 2], "?page=1");
+					} else{
+						if($filter == false) {
+							$kategori = $proses->showKategoriNonFilter($this->requestURI[$this->
+						SumOfSub + 2], $this->requestURI[$this->SumOfSub + 3]);
+						} else {
+							$kategori = $proses->showKategoriWithFilter($this->requestURI[$this->SumOfSub + 2], $this->requestURI[$this->SumOfSub + 3]);
+						}
+					}
                     include APPPATH."page/kategori.php";
                     break;
                 case NULL:

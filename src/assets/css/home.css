@@ -9,11 +9,11 @@ body {
     margin: 0;
     padding: 0;
     text-align: left;
+    z-index: 1;
 }
 .container {
     margin-left:auto;
 	margin-right:auto;
-	position:relative;
 	max-width: 950px;
 }
 #logo {
@@ -43,8 +43,6 @@ header nav .menu_cell {
 header #kategorilist {
     background-color: #99FF99;
     box-shadow: inset 0px 2px 3px #888;
-    -moz-box-shadow: inset 0px 2px 3px #888;
-    -webkit-box-shadow: inset 0px 2px 3px #888;
 }
 header #kategorilist a {
     color: black;
@@ -57,8 +55,6 @@ header #kategorilist a {
 header #kategorilist a:hover {
     background-color: #FFCCCC;
     box-shadow: inset 0px 2px 3px #888;
-    -moz-box-shadow: inset 0px 2px 3px #888;
-    -webkit-box-shadow: inset 0px 2px 3px #888;
 }
 article {
     padding-bottom: 16px;
@@ -83,9 +79,8 @@ footer {
     line-height: 1.7em;
 }
 #wbd_search {
-    position: absolute; 
-    top: 0; 
-    right: 0;
+    position: relative;
+    float: right;
 }
 .kategori_group {
     margin-top: -20px;
@@ -93,6 +88,12 @@ footer {
 .kategori_group > a {
     padding-left: 25px;
     padding-right: 25px;
+    animation: myfirst 5s linear 2s infinite alternate;
+    -webkit-animation: myfirst 5s linear 2s infinite alternate;
+}
+#background_cat .background {
+    animation: myfirst 5s linear 2s infinite alternate;
+    -webkit-animation: myfirst 5s linear 2s infinite alternate;
 }
 
 /* PENDAFTARAN */
@@ -247,4 +248,37 @@ footer {
 }
 .barang [name=qty] {
     width: 30px;
+}
+
+/* SEARCH RESULT */
+.sresult > .row {
+    height: 150px;
+}
+.sresult h3 {
+    line-height: 1em;
+    margin: 0;
+    padding: 0;
+}
+.sresult p {
+    margin-top: 4px;
+}
+.sresult [name=qty] {
+    width: 30px;
+}
+
+@keyframes myfirst
+{
+0%   {margin-left: 0px; margin-right: 0px; }
+25%  {margin-left: 4px; margin-right: 4px; }
+50%  {margin-left: 8px; margin-right: 8px; }
+75%  {margin-left: 4px; margin-right: 4px; }
+100% {margin-left: 0px; margin-right: 0px; }
+}
+@-webkit-keyframes myfirst
+{
+0%   {margin-left: 0px; margin-right: 0px; }
+25%  {margin-left: 4px; margin-right: 4px; }
+50%  {margin-left: 8px; margin-right: 8px; }
+75%  {margin-left: 4px; margin-right: 4px; }
+100% {margin-left: 0px; margin-right: 0px; }
 }

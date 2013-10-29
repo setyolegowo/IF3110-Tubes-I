@@ -57,6 +57,9 @@
     -o-transition: opacity .5s, top .5s;
     transition: opacity .5s, top .5s;
 }
+.popup a {
+    color: black;
+}
 .overlay:target .popup {
     top: 50%;
     opacity: 1;

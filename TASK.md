@@ -21,17 +21,19 @@ Setyo:
     - Merge layout dari Vai
       [Sudah] [Belum divalidasi]
     - Paginasi
-      [Belum]
+      [Sudah]
     - Check sebelum beli apakah kartu kredit sudah didaftarkan atau belum
-      [Belum]
+      [Sudah]
     - Otomatisasi melihat profil saat mulai masuk profil
-      [Belum]
-    - Error pada shorting
-      [Belum]
+      [Sudah]
+    - Error pada sorting
+      [Sudah]
     - Auto suggestion
-      [Belum]
+      [Tidak dibuat]
     - Filter untuk harga atau kategori
-      [Belum]
+      [Sudah]
+    - Select input tanggal dengan kalender
+      [Tidak dibuat]
     
 Rivai:
     - Konsep layout HTML
@@ -39,7 +41,7 @@ Rivai:
     - Tampilan Header dan Footer tanpa JS
       [Sudah]
     - Membuat validasi tingkat javascript
-      [Belum Seluruh] [80%] [Deadline: 27 Oktober 2013]
+      [Belum Seluruh] [90%] [Deadline: 29 Oktober 2013]
     - Membuat halaman barang per kategori barang
       [Sudah] [Belum divalidasi]
     - Membuat halaman hasil dari pencarian
@@ -51,8 +53,10 @@ Renusa:
     - Database dan konsep store saved
       [Sudah] [Belum divalidasi]
     - Membuat data utama (non dummy) + gambar produk atau barang
-      [Belum] [Deadline: 27 Oktober 2013]
+      [Belum] [Deadline: 29 Oktober 2013]
     - Membuat halaman untuk shopping bag
       [Sudah] [Belum divalidasi]
     - Membuat halaman edit profil pelanggan.
+      [Sudah] [Belum divalidasi]
+    - Menampilkan 3 barang terbanyak dibeli dari setiap kategori di halaman utama
       [Sudah] [Belum divalidasi]

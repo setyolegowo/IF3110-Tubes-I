@@ -319,5 +319,20 @@ class JsonResponder
         }
         print json_encode($data);
     }
+    public function checkCard($param){
+		$query = sprintf("SELECT card_number FROM pelanggan_card JOIN pelanggan_id ON 
+		pelanggan_id.user_id = pelanggan_card.user_id WHERE pelanggan_id.user_id ='%d'",
+		$param['user_id']);
+		
+		$result = mysql_query($query, $this->__connection);
+		$result_table = mysql_fetch_array($result);
+		
+		if ($result_table['card_number'] == NULL){
+			$data = 0;
+		} else {
+			$data = 1;
+		}
+		print ($data);
+	}
 }
 ?>

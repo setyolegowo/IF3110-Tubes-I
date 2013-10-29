@@ -409,3 +409,20 @@ function validateQtyBarang(fld) {
         parent.lastChild.disabled = true;
     }   
 }
+/* CHECK USER WAS REGISTERED CARD NUMBER OR NOT YET */
+function checkIsCard(){
+    var str = {"user_id":getItemLocalStorage("userData").user_id};
+    var bucket = {"todo":"checkCard", "data":str};
+    sendJSONType(bucket, checkCardAfter);
+}
+
+function checkCardAfter(data) {
+    //After get data from jsonresponder
+    var result = (data == 1);
+    if (result){
+        buy();
+    } else {
+        alert('Data Credit Card kosong');
+        window.location.href = BASE_URL + "pendaftaran/kartu";
+    }
+}

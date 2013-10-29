@@ -277,6 +277,7 @@ function buy() {
 function buyAfter(data) {
 	var result = JSON.parse(data);
 	alert(result.data);
+	window.location.href = window.location.href;
 }
 function addToShoppingBagAfter(data) {
 	var result = JSON.parse(data);
@@ -361,4 +362,10 @@ if(typeof(Storage) !== "undefined") {
 	}
 } else {
 	alert("Browser tidak support Local Storage. Mohon ganti ke browser yang mendukung.");
+}
+
+/* IF SEE PROFIL PAGE */
+var url = document.location.href;
+if(url.indexOf('profil') >= 0) {
+	getMoreIdentity();
 }

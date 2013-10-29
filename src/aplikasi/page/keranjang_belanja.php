@@ -25,7 +25,7 @@
         <span class="column"></span>
         <span class="column"></span>
         <span class="column"></span>
-        <span class="column">Total: Rp. <?php print number_format($keranjang['total'], 2, ',', '.'); ?><p><input type="button" value="Simpan" onClick="saveToShoppingBag()"><input type="button" value="Beli" onClick="buy()"></p></span>
+        <span class="column">Total: Rp. <?php print number_format($keranjang['total'], 2, ',', '.'); ?><p><input type="button" value="Simpan" onClick="saveToShoppingBag()"><input type="button" value="Beli" onClick="checkIsCard()"></p></span>
     </div>
     <?php } else { ?>
     <p>Tidak ada barang di keranjang</p>

@@ -52,18 +52,29 @@ class process
     public function getUserID() {
         return $this->__id_num;
     }
-    public function showKategoriNonFilter($kategori_id) {
-        $result = array();
+    public function showKategoriNonFilter($kategori_id, $parameter) {
+        $params = substr($parameter, 1);
+        $elemen = explode('=', $params);
+        $page = (int) $elemen[1];
+        
+		$base = ($page-1)*10;
+		$limit = 10;
+		if ($base < 0) $base = 0;
+		if ($limit < 0) $limit = 1;
+		
+		
+		$result = array();
         $this->__kategori_id = $kategori_id;
         
-        // select category name from DB
+		
+		// select category name from DB
         $sql = "SELECT kategori_nama FROM barang_kategori WHERE kategori_id = ".mysql_real_escape_string($kategori_id).";";
         $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
         $row = mysql_fetch_array($query);
         $result['nama_kategori'] = $row['kategori_nama'];
         
         // select good from DB
-        $sql = "SELECT barang_id, nama, harga, image_url FROM barang_data WHERE kategori_id = ".mysql_real_escape_string($kategori_id).";";
+        $sql = "SELECT barang_id, nama, harga, image_url FROM barang_data WHERE kategori_id = ".mysql_real_escape_string($kategori_id)." LIMIT ".$base.",".$limit.";";
         $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
         while($row = mysql_fetch_assoc($query)) {
             $result['data'][] = $row;
@@ -90,9 +101,16 @@ class process
         $by = $elemen[1];
         $elemen = explode('=', $each[1]);
         $sort = $elemen[1];
+		$elemen = explode('=',$each[2]);
+		$page = (int) $elemen[1];
         $result = array();
         $this->__kategori_id = $kategori_id;
         
+		$base = ($page-1)*10;
+		$limit = 10;
+		if ($base < 0) $base = 0;
+		if ($limit < 0) $limit = 1;
+		
         // select category name from DB
         $sql = "SELECT kategori_nama FROM barang_kategori WHERE kategori_id = ".mysql_real_escape_string($kategori_id).";";
         $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
@@ -101,7 +119,7 @@ class process
         
         // select good from DB
         $sql = "SELECT barang_id, nama, harga, image_url FROM barang_data WHERE kategori_id = ".mysql_real_escape_string($kategori_id);
-        $sql .= " GROUP BY ".mysql_real_escape_string($by)." ".mysql_real_escape_string($sort).";";
+        $sql .= " ORDER BY ".mysql_real_escape_string($by)." ".mysql_real_escape_string($sort)." LIMIT ".$base.",".$limit.";";
         $query = mysql_query($sql, $this->__connection) or trigger_error(mysql_error(), E_USER_ERROR);
         while($row = mysql_fetch_assoc($query)) {
             $result['data'][] = $row;

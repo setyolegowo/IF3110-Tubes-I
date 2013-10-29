@@ -17,11 +17,12 @@
                 <input type="submit" name="submit" value="Cari">
             </form>
             <a id="keranjang_belanja" class="menu_cell hyperlink" href="<?php print HOME_URL; ?>keranjang/">Keranjang Belanja <?php if(isset($_SESSION['shopping_bag'])) { $result = json_decode($_SESSION['shopping_bag'], true); print '<span id="total_keranjang">'.count($result['data']).'</span>'; } ?></a>
-        </div></nav>
+            </div>
+        </nav>
         <div class="container">
             <a href="<?php print HOME_URL; ?>"><img id="logo" src="<?php print HOME_URL; ?>assets/logo.png" height="72" alt="Ruko Serba Ada"></a>
         </div>
-        <div>
+        <div id="background_cat">
             <img class="background" id='kat1' src="<?php print HOME_URL; ?>assets/img_style/kat1.gif" alt="Kategori 1"/>
             <img class="background" id='kat2' src="<?php print HOME_URL; ?>assets/img_style/kat2.gif" alt="Kategori 1"/>
             <img class="background" id='kat3' src="<?php print HOME_URL; ?>assets/img_style/kat3.gif" alt="Kategori 1"/>
