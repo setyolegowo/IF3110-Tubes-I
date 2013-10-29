@@ -3,23 +3,23 @@ Pembagian Tugas
 
 Setyo:
     - Membuat framework PHP
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Membuat fungsi dasar AJAX dengan JSON
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Membuat fungsi response server (PHP) dengan JSON
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Membuat kelas (atau kumpulan fungsi) "Response" dari data JSON client
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Membuat interaksi dan transaksi login dan logout.
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Membuat halaman pendaftaran pertama, pendaftaran kartu kredit, dan tampilan profil.
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Membuat mekanisme penggunaan Local Storage
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Membuat mekanisme penyimpanan data shopping bag
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Merge layout dari Vai
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Otomatisasi melihat profil saat mulai masuk profil
       [Sudah]
     - Auto suggestion
@@ -28,20 +28,20 @@ Setyo:
       [Sudah]
     - Select input tanggal dengan kalender
       [Tidak dibuat]
+    - Membuat halaman hasil dari pencarian
+      [Sudah]
     
 Rivai:
     - Konsep layout HTML
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Tampilan Header dan Footer tanpa JS
       [Sudah]
     - Membuat validasi tingkat javascript
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Membuat halaman barang per kategori barang
-      [Sudah] [Belum divalidasi]
-    - Membuat halaman hasil dari pencarian
-      [Belum] [Deadline: 27 Oktober 2013]
+      [Sudah]
     - Membuat halaman detail barang
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Error pada sorting
       [Sudah]
     - Paginasi
@@ -49,14 +49,14 @@ Rivai:
 
 Renusa:
     - Database dan konsep store saved
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Membuat data utama (non dummy) + gambar produk atau barang
-      [Belum semua] [50%] [Deadline: 29 Oktober 2013]
+      [Sudah]
     - Membuat halaman untuk shopping bag
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Membuat halaman edit profil pelanggan.
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Menampilkan 3 barang terbanyak dibeli dari setiap kategori di halaman utama
-      [Sudah] [Belum divalidasi]
+      [Sudah]
     - Check sebelum beli apakah kartu kredit sudah didaftarkan atau belum
       [Sudah]
